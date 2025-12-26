@@ -29,6 +29,17 @@ class LoginLogoutController extends Controller
             return redirect()->route('main');
         }
     }
+    public function logout(Request $request)
+    {
+        // 1. ユーザーをログアウトさせる
+        Auth::logout();
+        // 2. セッションを無効にする
+        $request->session()->invalidate();
+        // 3. 新しいCSRFトークンを再生成する
+        $request->session()->regenerateToken();
+        // 4. トップページにリダイレクトする
+        return redirect()->route('top');
+    }
     public function register(Request $request){
         $req = $request->validate([
             'name' =>  ['required'],
@@ -42,10 +53,5 @@ class LoginLogoutController extends Controller
         $users->save();
 
         return redirect()->route('login');
-    }
-
-    public function mainpage(){
-        //mainpageをここに記述するのは本意ではない
-        return view('main');
     }
 }

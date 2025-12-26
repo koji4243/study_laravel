@@ -3,6 +3,7 @@
 use App\Http\Controllers\TopController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginLogoutController;
+use App\Http\Controllers\PostController;
 
 /*
 |--------------------------------------------------------------------------
@@ -19,7 +20,7 @@ use App\Http\Controllers\LoginLogoutController;
 //     return view('welcome');
 // });
 Route::middleware(['auth'])->group(function () {
-    Route::get('main', action: [LoginLogoutController::class, 'mainpage'])->name('main');
+    Route::get('main', action: [PostController::class, 'mainpage'])->name('main');
 });
 
 Route::get('/', action: [TopController::class, 'toppage'])->name('top');
@@ -31,3 +32,5 @@ Route::post('login', action: [LoginLogoutController::class, 'login']);
 Route::get('register', action: [LoginLogoutController::class, 'registerform'])->name('register');
 
 Route::post('register', action: [LoginLogoutController::class, 'register'])->name('register');
+
+Route::post('logout', action: [LoginLogoutController::class, 'logout'])->name('logout');
