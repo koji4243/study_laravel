@@ -12,6 +12,6 @@ class PostController extends Controller
     public function mainpage(){
         $users = Auth::user();
         $posts = Post::with('user')->get();
-        return view('main', compact('users', 'posts'));
+        return view('user.post', compact('users', 'posts'));
     }
 }

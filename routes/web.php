@@ -4,6 +4,8 @@ use App\Http\Controllers\TopController;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\LoginLogoutController;
 use App\Http\Controllers\PostController;
+use App\Http\Controllers\AdminController;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -21,13 +23,16 @@ use App\Http\Controllers\PostController;
 // });
 Route::middleware(['auth'])->group(function () {
     Route::get('main', action: [PostController::class, 'mainpage'])->name('main');
+
+    Route::get('admin', [AdminController::class, 'adminpage'])
+            ->middleware('can:admin')->name('admin');
 });
 
 Route::get('/', action: [TopController::class, 'toppage'])->name('top');
 
 Route::get('login', action: [LoginLogoutController::class, 'loginform'])->name('login');
 
-Route::post('login', action: [LoginLogoutController::class, 'login']);
+Route::post('login', action: [LoginLogoutController::class, 'login'])->name('auth');
 
 Route::get('register', action: [LoginLogoutController::class, 'registerform'])->name('register');
 

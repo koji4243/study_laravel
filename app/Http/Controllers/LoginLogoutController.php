@@ -16,7 +16,7 @@ class LoginLogoutController extends Controller
         return view('register');
     }
 
-    public function login(Request $request){
+    public function login(Request $request, User $user){
         //  リクエストのデータを検証する
         $credentials = $request->validate([
             'email' => ['required', 'email'],
@@ -25,20 +25,23 @@ class LoginLogoutController extends Controller
         if (Auth::attempt($credentials)) {
             // 認証に成功したら、セッションを再生成する
             $request->session()->regenerate();
-            
+            if (Auth::guard('admin')) {
+                return redirect()->intended('/admin');
+            }
             return redirect()->route('main');
         }
     }
     public function logout(Request $request)
-    {
-        // 1. ユーザーをログアウトさせる
+    {    
+    if (Auth::guard('admin')->check()) {
+        Auth::guard('admin')->logout();
+    }
+    if (Auth::check()) {
         Auth::logout();
-        // 2. セッションを無効にする
-        $request->session()->invalidate();
-        // 3. 新しいCSRFトークンを再生成する
-        $request->session()->regenerateToken();
-        // 4. トップページにリダイレクトする
-        return redirect()->route('top');
+    }
+    $request->session()->invalidate();
+    $request->session()->regenerateToken();
+    return redirect()->route('top');
     }
     public function register(Request $request){
         $req = $request->validate([

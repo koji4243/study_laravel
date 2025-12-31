@@ -33,6 +33,9 @@
         font-size: .9rem;
         color: #554f4fff;
     }
+    a{
+        text-decoration: none;
+    }
     </style>
 
 <body>
@@ -45,41 +48,18 @@
                 </h5>
                 <p class="m-3">こんにちわ　{{ $users['name'] }}さん</p>
             </div>
-            <form name="logout" class="d-block" method="post" action="{{ route('logout') }}">
+            <form name="logout" class="d-block my-auto" method="post" action="{{ route('logout') }}">
                 @csrf
                 <a href="javascript:logout.submit()">ログアウト</a>
             </form>
         </div>
-        <h1 class="h-3 my-4 text-center">投稿一覧</h1>
-
-        @if ($users['lore'] === 2)
-            <div class="text-center">
-                <a href="#" class="h5 btn btn-primary">投稿する</a>
-            </div>
+        @if ($users['lore'] === 3)
+            <h1 class="h-3 my-4 text-center">管理者画面</h1>
+        @else
+            <h1 class="h-3 my-4 text-center">投稿一覧</h1>
         @endif
-        <hr>
 
-        <article>
-            <div class="row d-flex flex-wrap">
-                @forelse($posts as $post)
-                    <div class="col-sm-3">
-                        <div class="box">
-                            <p class="user">{{ $post->user->name }}さんからの投稿<i class="d-inlineblock ms-2 fa-regular fa-face-smile"></i></p>
-                            <h6>{{ $post->title }}</h6>
-                            <p class="mt-3">{{ $post->body }}</p>
-                            <div class="form">
-                                <form action="#" class="d-block d-flex">
-                                    <button class="d-block btn btn-warning">編集</button>
-                                    <button class="ms-3 d-block btn btn-danger">削除</button>
-                                </form>
-                            </div>
-                        </div>
-                    </div>
-                @empty
-                    <p class="text-center">投稿がありません</p>
-                @endforelse
-            </div>
-        </article>
+    @yield('content')
     </section>
 
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/js/bootstrap.bundle.min.js" integrity="sha384-geWF76RCwLtnZ8qwWowPQNguL3RmwHVBC9FhGdlKrxdiJJigb/j/68SIy3Te4Bkz" crossorigin="anonymous"></script>

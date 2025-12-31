@@ -65,7 +65,7 @@
             @endif
         </div>
         <div>
-            <form method="post">
+            <form action="{{ route('auth') }}" method="post">
                 @csrf
                 <div class="item">
                     <label for="email">メールアドレス</label>
