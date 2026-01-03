@@ -1,10 +1,8 @@
 @extends('main')
 
 @section('content')
-@can('admin')
-    管理者だけ見える
-@endcan
-    @if ($users['lore'] === 2)
+    <h1 class="h-3 my-4 text-center">投稿一覧</h1>
+    @if ($users['lore'] === 2 || $users['lore'] === 3)
         <div class="text-center">
             <a href="#" class="h5 btn btn-primary">投稿する</a>
         </div>

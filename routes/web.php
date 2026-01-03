@@ -21,11 +21,15 @@ use App\Http\Controllers\AdminController;
 // Route::get('/', function () {
 //     return view('welcome');
 // });
-Route::middleware(['auth'])->group(function () {
-    Route::get('main', action: [PostController::class, 'mainpage'])->name('main');
-
-    Route::get('admin', [AdminController::class, 'adminpage'])
-            ->middleware('can:admin')->name('admin');
+Route::prefix('/main')->group(function () {
+    Route::get('/posts', [PostController::class, 'mainpage'])->name('main');
+    // 管理者ユーザーのみ
+    Route::group(['middleware' => ['auth', 'can:admin']], function () {
+        Route::get('/admin', [AdminController::class, 'adminpage'])->name('admin');
+        Route::get('/admin/form', [AdminController::class, 'editform'])->name('edit');
+        Route::post('/admin/form', [AdminController::class, 'check'])->name('formSend');
+        Route::put('/admin/update', [AdminController::class, 'update'])->name('update');
+    });
 });
 
 Route::get('/', action: [TopController::class, 'toppage'])->name('top');

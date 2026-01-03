@@ -36,6 +36,10 @@
     a{
         text-decoration: none;
     }
+    span{
+        font-weight: 700;
+        font-size: 1.2rem;
+    }
     </style>
 
 <body>
@@ -50,14 +54,12 @@
             </div>
             <form name="logout" class="d-block my-auto" method="post" action="{{ route('logout') }}">
                 @csrf
-                <a href="javascript:logout.submit()">ログアウト</a>
+                <p class="text-end"><a href="javascript:logout.submit()">ログアウト</a></p>
+                @can('admin')
+                    <p><a href="{{ route('admin') }}">管理者画面に戻る</a></p>
+                @endcan
             </form>
         </div>
-        @if ($users['lore'] === 3)
-            <h1 class="h-3 my-4 text-center">管理者画面</h1>
-        @else
-            <h1 class="h-3 my-4 text-center">投稿一覧</h1>
-        @endif
 
     @yield('content')
     </section>

@@ -31,5 +31,8 @@ class AuthServiceProvider extends ServiceProvider
         Gate::define('admin', function (User $user) {
             return ($user->lore === 3);
         });
+        Gate::define('postsUser', function (User $user) {
+            return ($user->lore === 2);
+        });
     }
 }

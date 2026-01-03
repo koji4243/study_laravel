@@ -23,25 +23,20 @@ class LoginLogoutController extends Controller
             'password' => ['required'],
         ]);
         if (Auth::attempt($credentials)) {
-            // 認証に成功したら、セッションを再生成する
             $request->session()->regenerate();
-            if (Auth::guard('admin')) {
-                return redirect()->intended('/admin');
+            if (Auth::user()->can('admin')) {
+                return redirect('/main/admin');
             }
-            return redirect()->route('main');
+            return redirect('/main/posts');
         }
+        
     }
     public function logout(Request $request)
     {    
-    if (Auth::guard('admin')->check()) {
-        Auth::guard('admin')->logout();
-    }
-    if (Auth::check()) {
         Auth::logout();
-    }
-    $request->session()->invalidate();
-    $request->session()->regenerateToken();
-    return redirect()->route('top');
+        $request->session()->invalidate();
+        $request->session()->regenerateToken();
+        return redirect()->route('top');
     }
     public function register(Request $request){
         $req = $request->validate([
