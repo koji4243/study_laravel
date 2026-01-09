@@ -41,7 +41,7 @@
 
                         <label>権限：</label>
                         <select name="changeRole">
-                            @for ($i = 1; $i <= $user->lore; $i++)
+                            @for ($i = 1; $i <= $users->lore; $i++)
                                 <option value="{{ $i }}">{{ $i }}</option>
                             @endfor
                         </select>
@@ -51,7 +51,7 @@
                     </div>
 
                 </form>
-            </div>s
+            </div>
         </div>
     </main>
 

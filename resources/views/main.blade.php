@@ -24,10 +24,22 @@
         text-align: center;
         position: relative;
     }
+    .post{
+        border-radius: 8px;
+        padding: 16px;
+        background: #ecf6f9ff;
+        box-shadow: 5px 5px 5px #e9e6e6ff;
+    }
     .form{
         position: absolute;
         bottom: 16px;
         left: 25%;
+    }
+    .badge{
+        position: absolute;
+        transform: rotate(-33deg); 
+        top: 10px;
+        left: -4%;
     }
     .user{
         font-size: .9rem;
@@ -52,9 +64,9 @@
                 </h5>
                 <p class="m-3">こんにちわ　{{ $users['name'] }}さん</p>
             </div>
-            <form name="logout" class="d-block my-auto" method="post" action="{{ route('logout') }}">
+            <form class="d-block my-auto" method="post" action="{{ route('logout') }}">
                 @csrf
-                <p class="text-end"><a href="javascript:logout.submit()">ログアウト</a></p>
+                <p class="text-end"><button type="submit">ログアウト</button></p>
                 @can('admin')
                     <p><a href="{{ route('admin') }}">管理者画面に戻る</a></p>
                 @endcan

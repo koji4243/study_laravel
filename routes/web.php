@@ -23,6 +23,11 @@ use App\Http\Controllers\AdminController;
 // });
 Route::prefix('/main')->group(function () {
     Route::get('/posts', [PostController::class, 'mainpage'])->name('main');
+    Route::get('/posts/create', [PostController::class, 'create'])->name('create');
+    Route::post('/posts', [PostController::class, 'store'])->name('post.store');
+    Route::get('/posts/edit/{post}', [PostController::class, 'postsEdit'])->name('post.edit');
+    Route::put('/posts/edit/{post}', [PostController::class, 'postUpdate'])->name('post.update');
+    Route::delete('/posts/destroy/{post}', [PostController::class, 'destroy'])->name('post.destroy');
     // 管理者ユーザーのみ
     Route::group(['middleware' => ['auth', 'can:admin']], function () {
         Route::get('/admin', [AdminController::class, 'adminpage'])->name('admin');
@@ -31,7 +36,6 @@ Route::prefix('/main')->group(function () {
         Route::put('/admin/update', [AdminController::class, 'update'])->name('update');
     });
 });
-
 Route::get('/', action: [TopController::class, 'toppage'])->name('top');
 
 Route::get('login', action: [LoginLogoutController::class, 'loginform'])->name('login');
